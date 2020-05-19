@@ -1,14 +1,11 @@
 import React from 'react';
-import Enzyme, {shallow} from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
+import {shallow} from 'enzyme';
 // import {render} from "@testing-library/react";
 
 import {findByTestAttr, checkProps} from "../test/testUtils";
 import Congrats from './Congrats';
 
 const defaultProps = {success: false};
-
-Enzyme.configure({adapter: new EnzymeAdapter()});
 
 /**
  * Factory function to create ShallowWrapper for the App component
