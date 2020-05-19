@@ -5,10 +5,19 @@ class App extends Component {
         counter: 0
     }
 
+    handleClick = () => {
+
+        const counter = this.state.counter + 1;
+
+        this.setState(
+            {counter}
+        );
+    }
+
     render() {
         return (<div data-test={"component-app"}>
-            <h1 data-test={"counter-display"}>The counter is currently: 0</h1>
-            <button data-test={"increment-button"}>Increment Counter</button>
+            <h1 data-test={"counter-display"}>The counter is currently: {this.state.counter}</h1>
+            <button data-test={"increment-button"} onClick={this.handleClick}>Increment Counter</button>
         </div>);
     }
 }
