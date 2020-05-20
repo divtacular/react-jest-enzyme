@@ -1,0 +1,11 @@
+import axios from 'axios';
+
+export const getSecretWord = async (setSecretWord) => {
+    const response = await axios.get('//localhost:3030');
+    setSecretWord(response.data)
+};
+
+//export default for mocking convenience
+export default {
+    getSecretWord
+}
