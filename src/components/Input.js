@@ -6,9 +6,14 @@ const Input = ({secretWord}) => {
 
     const [currentGuess, setCurrentGuess] = React.useState('');
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        setCurrentGuess('');
+    }
+
     return (
         <div data-test={"component-input"}>
-            <form className={"form-inline"} onSubmit={(e) => e.preventDefault()}>
+            <form className={"form-inline"} data-test="form-guess">
                 <input
                     data-test={"input-box"}
                     className={"mb-2 mx-sm-3"}
@@ -20,10 +25,12 @@ const Input = ({secretWord}) => {
                     }}
                 />
                 <button
-                    data-test={"submit-button"}
                     type={"submit"}
+                    data-test={"submit-button"}
                     className={"btn btn-primary mb-2"}
-                >Submit</button>
+                    onClick={handleClick}
+                >Submit
+                </button>
             </form>
         </div>
     );
