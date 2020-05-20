@@ -23,7 +23,7 @@ function reducer(state, action) {
 
 const App = () => {
 
-    const {state, dispatch} = React.useReducer(reducer, {secretWord: null});
+    const [state, dispatch] = React.useReducer(reducer, {secretWord: null});
 
     const setSecretWord = (secretWord) => {
         dispatch({
@@ -36,10 +36,16 @@ const App = () => {
         hookActions.getSecretWord(setSecretWord)
     }, []);
 
+    if(!state.secretWord) {
+        return (<div className={"container"} data-test={"spinner"}>
+            <div className={"spinner-border"} role={"status"}><span className={"sr-only"}>Loading...</span></div>
+        </div>);
+    }
+
     return (
         <div className={"container"} data-test={"component-app"}>
             <h1>Jotto</h1>
-            <Input secretWord={"party"}></Input>
+            <Input secretWord={state.secretWord}></Input>
             <Congrats success={true}/>
             <GuessedWords guessedWords={[
                 {guessedWord: 'train', letterMatchCount: 3}
