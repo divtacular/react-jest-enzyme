@@ -1,10 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-// import {render} from "@testing-library/react";
 
-import {findByTestAttr, checkProps} from "../test/testUtils";
-import App from './App';
-import Congrats from "./Congrats";
+import {findByTestAttr, checkProps} from "../../test/testUtils";
+import App from '../App';
 
 const defaultProps = {};
 
