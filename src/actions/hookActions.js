@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getSecretWord = async (setSecretWord) => {
+export const getSecretWord = async (callback) => {
     const response = await axios.get('//localhost:3030');
-    setSecretWord(response.data)
+    callback(response.data)
 };
 
 //export default for mocking convenience

@@ -17,7 +17,7 @@ const Input = ({secretWord}) => {
                 <input
                     data-test={"input-box"}
                     className={"mb-2 mx-sm-3"}
-                    type={"text"} p
+                    type={"text"}
                     placeholder={"Enter guess"}
                     value={currentGuess}
                     onChange={({target}) => {

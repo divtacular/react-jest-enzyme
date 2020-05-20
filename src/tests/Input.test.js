@@ -35,6 +35,7 @@ test('renders without error', () => {
 test('does not throw warning with expected props', () => {
     checkProps(InputComponent, defaultProps);
 });
+
 describe("state controlled input field", () => {
     let mockSetCurrentGuess = jest.fn();
     let wrapper;
