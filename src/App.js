@@ -66,10 +66,8 @@ const App = () => {
             <languageContext.Provider value={state.language}>
                 <LanguagePicker setLanguage={setLanguage}/>
                 <Input secretWord={state.secretWord}/>
-                <Congrats success={true}/>
-                <GuessedWords guessedWords={[
-                    {guessedWord: 'train', letterMatchCount: 3}
-                ]}/>
+                <Congrats success={false}/>
+                <GuessedWords guessedWords={[]}/>
             </languageContext.Provider>
         </div>
     );
