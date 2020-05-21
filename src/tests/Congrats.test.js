@@ -12,7 +12,7 @@ const defaultProps = {success: false};
  * Factory function to create ShallowWrapper for the App component
  * @function setup
  * @param {object} testValues - Context values specific to this setup
- * @returns {ShallowWrapper}
+ * @returns {ReactWrapper}
  */
 const setup = ({success, language}) => {
     language = language || 'en';
