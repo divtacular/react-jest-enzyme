@@ -36,7 +36,7 @@ const App = () => {
         hookActions.getSecretWord(setSecretWord)
     }, []);
 
-    if(!state.secretWord) {
+    if (!state.secretWord) {
         return (<div className={"container"} data-test={"spinner"}>
             <div className={"spinner-border"} role={"status"}><span className={"sr-only"}>Loading...</span></div>
         </div>);
@@ -45,7 +45,7 @@ const App = () => {
     return (
         <div className={"container"} data-test={"component-app"}>
             <h1>Jotto</h1>
-            <Input secretWord={state.secretWord}></Input>
+            <Input secretWord={state.secretWord}/>
             <Congrats success={true}/>
             <GuessedWords guessedWords={[
                 {guessedWord: 'train', letterMatchCount: 3}
