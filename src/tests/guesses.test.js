@@ -5,15 +5,29 @@ import {findByTestAttr} from "../../test/testUtils";
 import Input from "../components/Input";
 import successContext from "../contexts/successContext";
 
-const setup = (secretWord = "party") => {
+import GuessedWords from "../components/GuessedWords";
+import guessedWordsContext from "../contexts/guessedWordsContext";
+
+const setup = (guessedWordsStrings = [], secretWord = "party") => {
     const wrapper = mount(
-        <successContext.SuccessProvider>
-            <Input secretWord={secretWord}/>
-        </successContext.SuccessProvider>
+        <guessedWordsContext.GuessedWordsProvider>
+            <successContext.SuccessProvider>
+                <Input secretWord={secretWord}/>
+                <GuessedWords/>
+            </successContext.SuccessProvider>
+        </guessedWordsContext.GuessedWordsProvider>
     );
 
     const inputBox = findByTestAttr(wrapper, 'input-box');
     const submitButton = findByTestAttr(wrapper, 'submit-button');
+
+
+    // prepopulate guessedWords by simulating word guesses
+    guessedWordsStrings.forEach((word) => {
+        const mockEvent = {target: {value: word}}
+        inputBox.simulate('change', mockEvent);
+        submitButton.simulate('click');
+    });
 
     return [wrapper, inputBox, submitButton];
 }
@@ -24,34 +38,62 @@ describe('test word guesses', () => {
     let submitButton;
 
     beforeEach(() => {
-        [wrapper, inputBox, submitButton] = setup();
+        [wrapper, inputBox, submitButton] = setup(['agile']);
     });
 
-    describe('correct guess' , () => {
-        beforeEach(() => {
-           const mockEvent = { target: {value: "party" }};
+    describe('non-empty guessedWords', () => {
+        describe('correct guess', () => {
+            beforeEach(() => {
+                const mockEvent = {target: {value: "party"}};
 
-           inputBox.simulate("change", mockEvent);
-           submitButton.simulate("click");
+                inputBox.simulate("change", mockEvent);
+                submitButton.simulate("click");
+            });
+
+            test('Input component contains no child', () => {
+                const inputComponent = findByTestAttr(wrapper, "component-input");
+
+                expect(inputComponent.children().length).toBe(0);
+            });
+
+            test('GuessedWords table rows equals number of guessed words', () => {
+                const guessedWordsTableRows = findByTestAttr(wrapper, 'guessed-words');
+                expect(guessedWordsTableRows.length).toBe(1);
+            });
+
+            test('Input box remains', () => {
+                expect(inputBox.exists()).toBe(true);
+            });
         });
 
-        test('Input component contains no child', () => {
-            const inputComponent = findByTestAttr(wrapper, "component-input");
+        describe('incorrect guess', () => {
+            beforeEach(() => {
+                const mockEvent = {target: {value: "train"}};
 
-            expect(inputComponent.children().length).toBe(0);
-        });
+                inputBox.simulate("change", mockEvent);
+                submitButton.simulate("click");
+            });
 
-        test('Input box remains', () => {
-           expect(inputBox.exists()).toBe(true);
+            test('GuessedWords table rows equals number of guessed words', () => {
+                const guessedWordsTableRows = findByTestAttr(wrapper, 'guessed-words');
+                expect(guessedWordsTableRows.length).toBe(1);
+            });
         });
     });
 
-    describe('incorrect guess' , () => {
+    describe('empty guessedWords', () => {
         beforeEach(() => {
-            const mockEvent = { target: {value: "train" }};
+            [wrapper, inputBox, submitButton] = setup([]);
+        });
 
-            inputBox.simulate("change", mockEvent);
-            submitButton.simulate("click");
+        test('guessedWords shows correct guesses after incorrect guess', () => {
+            const mockEvent = {target: {value: 'train'}};
+
+            inputBox.simulate('change', mockEvent);
+            submitButton.simulate('click');
+
+            const guessedWordsTableRows = findByTestAttr(wrapper, 'guessed-word');
+            expect(guessedWordsTableRows.length).toBe(1);
         });
     });
 })

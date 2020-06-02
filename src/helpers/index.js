@@ -6,6 +6,6 @@
  */
 export function getLetterMatchCount(guessedWord, secretWord) {
     return Array.from(secretWord).filter((letter) => {
-        return guessedWord.indexOf(letter) > -1
+        return ~guessedWord.indexOf(letter);
     }).length;
 };

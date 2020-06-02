@@ -6,6 +6,7 @@ import InputComponent from "../components/Input";
 import languageContext from "../contexts/languageContext";
 import Congrats from "../components/Congrats";
 import successContext from "../contexts/successContext";
+import guessedWordsContext from "../contexts/guessedWordsContext";
 
 const defaultProps = {secretWord: 'party'};
 
@@ -22,9 +23,11 @@ const setup = ({secretWord, language, success}) => {
 
     return mount(
         <languageContext.Provider value={language}>
-            <successContext.SuccessProvider value={[success, jest.fn()]}>
-                <InputComponent secretWord={secretWord}/>
-            </successContext.SuccessProvider>
+            <guessedWordsContext.GuessedWordsProvider>
+                <successContext.SuccessProvider value={[success, jest.fn()]}>
+                    <InputComponent secretWord={secretWord}/>
+                </successContext.SuccessProvider>
+            </guessedWordsContext.GuessedWordsProvider>
         </languageContext.Provider>
     );
 }
@@ -110,5 +113,5 @@ test('input component does not show when success is true', () => {
         success: true
     });
 
-    expect(wrapper.isEmptyRender(  )).toBe(true)
+    expect(wrapper.isEmptyRender()).toBe(true)
 })

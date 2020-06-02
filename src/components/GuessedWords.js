@@ -13,9 +13,12 @@ const GuessedWords = () => {
     if (guessedWords.length === 0) {
         contents = <p data-test={"guess-instructions"}>{stringsModule.getStringByLanguage(language, 'guessPrompt')}</p>;
     } else {
-        const guessedWordsRows = guessedWords.map(({guessedWord, letterMatchCount}, i) => {
+
+        console.log(guessedWords);
+
+        const guessedWordsRows = guessedWords.map(({guessWord, letterMatchCount}, i) => {
             return <tr key={i} data-test={"guessed-word"}>
-                <td>{guessedWord}</td>
+                <td>{guessWord}</td>
                 <td>{letterMatchCount}</td>
             </tr>
         });
