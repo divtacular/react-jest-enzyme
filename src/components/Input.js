@@ -14,6 +14,10 @@ const Input = ({secretWord}) => {
 
     const handleClick = (e) => {
         e.preventDefault();
+        if(currentGuess === secretWord) {
+            setSuccess(true);
+        }
+
         setCurrentGuess('');
     }
 
