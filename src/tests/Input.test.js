@@ -5,6 +5,7 @@ import {findByTestAttr, checkProps} from "../../test/testUtils";
 import InputComponent from "../components/Input";
 import languageContext from "../contexts/languageContext";
 import Congrats from "../components/Congrats";
+import successContext from "../contexts/successContext";
 
 const defaultProps = {secretWord: 'party'};
 
@@ -14,13 +15,16 @@ const defaultProps = {secretWord: 'party'};
  * @param {object} props - Component props for this setup
  * @returns {ReactWrapper}
  */
-const setup = ({secretWord, language}) => {
+const setup = ({secretWord, language, success}) => {
     language = language || 'en';
     secretWord = secretWord || 'party';
+    success = success || false;
 
     return mount(
         <languageContext.Provider value={language}>
-            <InputComponent secretWord={secretWord}/>
+            <successContext.SuccessProvider value={[success, jest.fn()]}>
+                <InputComponent secretWord={secretWord}/>
+            </successContext.SuccessProvider>
         </languageContext.Provider>
     );
 }
@@ -81,7 +85,6 @@ describe("state controlled input field", () => {
 });
 
 
-
 describe('languagePicker', () => {
     test('correctly renders congrats string in English', () => {
         const wrapper = setup({});
@@ -100,3 +103,12 @@ describe('languagePicker', () => {
         expect(submitBtn.text()).toBe('🚀');
     });
 });
+
+test('input component does not show when success is true', () => {
+    const wrapper = setup({
+        secretWord: 'party',
+        success: true
+    });
+
+    expect(wrapper.isEmptyRender(  )).toBe(true)
+})
