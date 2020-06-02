@@ -96,7 +96,6 @@ describe("languagePicker", () => {
         React.useContext = mockUseContext;
 
         const wrapper = setup({guessedWords: []});
-        console.log(wrapper.debug({verbose: true}));
         const guessInstructions = findByTestAttr(wrapper, 'guess-instructions');
         expect(guessInstructions.text()).toBe('🤔🤫🔤');
     });
